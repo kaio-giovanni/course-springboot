@@ -20,7 +20,7 @@ public class CategoryService {
     }
 
     public Category findById(Long id){
-        Optional<Category> categories = repository.findById(id);
-        return categories.get();
+        Optional<Category> category = repository.findById(id);
+        return category.get();
     }
 }
