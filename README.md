@@ -1,5 +1,5 @@
 ## Course-spring
-This is a basic spring study project
+Building an api rest using spring-boot and java 11.
 
 ### Dependencies
 - git
@@ -13,11 +13,11 @@ This is a basic spring study project
     
 ### Run project
 To run this project use the command bellow:
-`gradle bootRun`
+- `gradle bootRun`
 
 ### Tests
 To execute all tests, execute the command bellow:
-`gradle test`
+- `gradle test`
 
 ### Author
 | ![user](https://avatars1.githubusercontent.com/u/64810260?v=4&s=150) |
