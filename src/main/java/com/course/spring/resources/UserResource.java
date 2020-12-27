@@ -1,5 +1,6 @@
 package com.course.spring.resources;
 
+import com.course.spring.dto.UserDTO;
 import com.course.spring.entities.User;
 import com.course.spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -17,21 +19,28 @@ public class UserResource {
     private UserService userService;
 
     @GetMapping()
-    public ResponseEntity<List<User>> findAll(){
+    public ResponseEntity<List<UserDTO>> findAll(){
         List<User> users = userService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+
+        List<UserDTO> usersDto = users.stream().map(u -> new UserDTO(u))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(usersDto, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
         User user = userService.findById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+
+        UserDTO userDTO = new UserDTO(user);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<User> create(@RequestBody User user){
+    public ResponseEntity<UserDTO> create(@RequestBody User user){
         User newUser = userService.create(user);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+
+        UserDTO userDTO = new UserDTO(newUser);
+        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -41,8 +50,10 @@ public class UserResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user){
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody User user){
         user = userService.update(id, user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+
+        UserDTO userDTO = new UserDTO(user);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 }
